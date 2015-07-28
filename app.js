@@ -28,13 +28,17 @@ server.listen(port, function(){
 /**
  *  Server static assets out of the `public` directory
  */
-app.use(express.static('public'));
+var path = require('path'); 
+app.use(express.static(path.join(__dirname, 'public')));  //Using relative path as Express on Windows systems cannot 
+                                                          //find 'public' folder otherwise
 
 /**
  *  Send the `public/index.html` to the browser
  */
 app.get('/', function(req, res){
-  res.sendfile('public/index.html');
+  var path = require('path');
+	res.sendFile('index.html', { root: path.join(__dirname, './public') }); //Using relative path as Express on Windows systems cannot 
+                                                                          //find 'public' folder otherwise
 });
 
 /**
